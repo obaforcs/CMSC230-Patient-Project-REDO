@@ -49,4 +49,9 @@ public class PatientIdentity {
         return false;
 
     }
+
+    @Override
+    public String toString(){
+        return "name: " + name.toString() + " dob: " + dateOfBirth.toString();
+    }
 }
