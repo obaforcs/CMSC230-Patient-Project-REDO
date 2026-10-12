@@ -18,4 +18,16 @@ public class Name {
     public String fullName() {
         return lastName + ", " + firstName;
     }
+
+    public boolean match(Name other){
+        String myFirst = this.firstName.toLowerCase();
+        String theirFirst = other.getFirstName().toLowerCase();
+        boolean firstSame = myFirst.equals(theirFirst);
+
+        String myLast = this.lastName.toLowerCase();
+        String theirLast = other.getLastName().toLowerCase();
+        boolean lastSame = myLast.equals(theirLast);
+
+        return firstSame && lastSame;
+    }
 }
