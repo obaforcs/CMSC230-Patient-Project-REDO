@@ -16,4 +16,16 @@ public class PatientIdentity {
     public Date getDateOfBirth(){
         return dateOfBirth;
     }
+
+    public boolean match(PatientIdentity other){
+        Name myName = this.name;
+        Name theirName = other.getName();
+        boolean nameSame = myName.match(theirName);
+
+        Date myDob = this.dateOfBirth;
+        Date theirDob = other.getDateOfBirth();
+        boolean dobSame = myDob.equals(theirDob);
+
+        return nameSame && dobSame;
+    }
 }
