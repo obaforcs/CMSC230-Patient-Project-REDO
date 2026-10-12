@@ -28,4 +28,25 @@ public class PatientIdentity {
 
         return nameSame && dobSame;
     }
+
+    public boolean isLessThan(PatientIdentity other){
+        Name myName = this.name;
+        Name theirName = other.getName();
+
+        if (myName.isLessThan(theirName)){
+            return true;
+        }
+
+        if (myName.match(theirName)){
+            Date myDob = this.dateOfBirth;
+            Date theirDob = other.getDateOfBirth();
+            int dobCompare = myDob.compareTo(theirDob);
+
+            if (dobCompare < 0){
+                return true;
+            }
+        }
+        return false;
+
+    }
 }
