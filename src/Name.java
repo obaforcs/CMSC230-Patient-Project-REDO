@@ -30,4 +30,29 @@ public class Name {
 
         return firstSame && lastSame;
     }
+
+    public boolean isLessThan(Name other){
+        String myLast = this.lastName.toLowerCase();
+        String theirLast = other.getLastName().toLowerCase();
+        int lastCompare = myLast.compareTo(theirLast);
+
+        if (lastCompare < 0){
+            return true;
+        }
+        if (lastCompare > 0){
+            return false;
+        }
+
+        String myFirst = this.firstName.toLowerCase();
+        String theirFirst = other.getFirstName().toLowerCase();
+        int firstCompare = myFirst.compareTo(theirFirst);
+
+        if (firstCompare < 0){
+            return true;
+        }
+        if (firstCompare > 0){
+            return false;
+        }
+        return false;
+    }
 }
