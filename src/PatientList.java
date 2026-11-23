@@ -23,6 +23,19 @@ public class PatientList {
     }
 
     public Patient find (PatientIdentity id){
+        int high = nextEmpty - 1;
+        int low = 0;
+
+        while (low <= high){
+            int mid = (low+high)/2;
+            if (id.match(patientArray[mid].getIdentity())){
+                return patientArray[mid];
+            } else if (id.isLessThan(patientArray[mid].getIdentity())){
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
         return null;
     }
 }
