@@ -38,4 +38,23 @@ public class PatientList {
         }
         return null;
     }
+
+    public class Iterator {
+        private int current;
+
+        public Iterator() {
+            current = 0;
+        }
+
+        public Patient next() {
+            if (current == nextEmpty) {
+                return null;
+            } else {
+                Patient p = patientArray[current];
+                current++;
+                return p;
+            }
+        }
+
+    }
 }

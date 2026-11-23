@@ -46,4 +46,34 @@ public class PatientListTest {
 
         assertNull(list.find(id2));
     }
+
+    @Test
+    void iteratorInOrder() {
+        PatientList list = new PatientList();
+
+        Name name1 = new Name("John", "Smith");
+        PatientIdentity id1 = new PatientIdentity(name1, new Date(100));
+        Patient smith = new Patient(id1);
+
+        Name name2 = new Name("Mickey", "Mouse");
+        PatientIdentity id2 = new PatientIdentity(name2, new Date(200));
+        Patient mouse = new Patient(id2);
+
+        Name name3 = new Name("Jose", "Suarez");
+        PatientIdentity id3 = new PatientIdentity(name3, new Date(50));
+        Patient suarez = new Patient(id3);
+
+        list.add(smith);
+        list.add(mouse);
+        list.add(suarez);
+
+        PatientList.Iterator it = list.new Iterator();
+
+        assertEquals(mouse, it.next());
+        assertEquals(smith, it.next());
+        assertEquals(suarez, it.next());
+        assertNull(it.next());
+
+
+    }
 }
