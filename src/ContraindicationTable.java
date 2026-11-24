@@ -1,5 +1,7 @@
 import java.io.File;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class ContraindicationTable {
     private static final int SIZE = 503;
@@ -57,6 +59,56 @@ public class ContraindicationTable {
             return false;
         }
     }
+
+    private static long daysBetween(Date earlier, Date later) {
+        long diffMillis = later.getTime() - earlier.getTime();
+        return TimeUnit.DAYS.convert(diffMillis, TimeUnit.MILLISECONDS);
+    }
+
+    private static boolean isCurrent(Prescription pr, Date today) {
+        long days = daysBetween(pr.getDateOfIssue(), today);
+        if (days >= 0 && days <= 365){
+            return true;
+        }
+        return false;
+    }
+
+    public Contraindications contraindicatedFor(Patient pat, Date today) {
+        Contraindications result = new Contraindications(pat.getIdentity().toString());
+
+        PrescriptionList.Iterator it = pat.getPrescriptions().new Iterator();
+        Prescription pr = it.next();
+        while (pr != null) {
+            if (isCurrent(pr, today)){
+                Contraindications c = find(pr.getName());
+                if (c != null){
+                    PrescriptionList.Iterator cit = c.getList().new Iterator();
+                    Prescription bad = cit.next();
+                    while (bad != null) {
+                        result.addContraindication(bad.getName());
+                        bad = cit.next();
+                    }
+                }
+            }
+            pr = it.next();
+        }
+        return result;
+    }
+
+    public boolean isContraindicated(Patient pat, Prescription proposed) {
+        Contraindications bad = contraindicatedFor(pat, proposed.getDateOfIssue());
+
+        PrescriptionList.Iterator it = bad.getList().new Iterator();
+        Prescription p = it.next();
+        while (p != null) {
+            if(p.getName().equals(proposed.getName())){
+                return true;
+            }
+            p = it.next();
+        }
+        return false;
+    }
+
 
     public static long hash(String name) {
         int len = name.length();
