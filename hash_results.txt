@@ -1,0 +1,40 @@
+CMSC 230 – Project 7 Hash Function Results
+
+Hash functions tested
+1. 8-letter hash: takes 8 characters from the medicine name at positions
+   0, 1, len/3, len/2, len/2+1, 2*len/3, len-2, len-1, and packs each one
+   into one byte of a long.
+2. 4-letter hash: same idea, but only uses 4 characters, at positions
+   0, len/3, 2*len/3, len-1.
+
+How I tested
+I loaded interactions.csv (8737 pairs, 196 different medicines) into the
+table with each hash function at 4 table sizes: 503, 1009, 2003, 5009
+(all prime). I counted a "probe" every time linear probing hit a slot
+holding a different medicine. The count covers every lookup while loading
+the file, not just the 196 inserts.
+
+Results (number of probes)
+Table size   8-letter   4-letter
+503          6204       39763
+1009         2623       12745
+2003         1131       12427
+5009         1011       10167
+
+What I found
+- The 8-letter hash had far fewer probes than the 4-letter hash at every
+  size (about 6 to 11 times fewer).
+- For the 8-letter hash, making the table bigger helped a lot from 503 to
+  2003, but going from 2003 to 5009 only dropped from 1131 to 1011. Once
+  the table is big enough, names stop running into each other by chance,
+  and the collisions left over come from names that get the exact same
+  hash code. A bigger table can't separate those.
+- The 4-letter hash barely improved even at 5009 because a lot of names
+  share the same 4 letters at those positions. For example, phytotine,
+  phytopine, and phytozine all get the same code. Out of 196 medicines,
+  the 4-letter hash only produced 120 different codes, while the 8-letter
+  hash produced 189. Names with the same code always start at the same
+  slot, no matter how big the table is.
+- I would use the 8-letter hash with a table size of 2003. It gets almost
+  all of the benefit, and 5009 would use 2.5 times the memory for only
+  about 10% fewer probes.

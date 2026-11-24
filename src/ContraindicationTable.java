@@ -4,12 +4,28 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class ContraindicationTable {
-    private static final int SIZE = 503;
-    private Contraindications[] table = new Contraindications[SIZE];
+    private final int size;
+    private final boolean useFour;
+    private Contraindications[] table;
     private long probes = 0;
 
+    public ContraindicationTable() {
+        this(503, false);
+    }
+
+    public ContraindicationTable(int size, boolean useFour) {
+        this.size = size;
+        this.useFour = useFour;
+        table = new Contraindications[size];
+    }
+
+    public long getProbes() {
+        return probes;
+    }
+
     private int findSlot(String name) {
-        int i = (int) (hash(name) % SIZE);
+        long h = useFour ? hash4(name) : hash(name);
+        int i = (int) (h % size);
 
         while (table[i] != null) {
             if (table[i].getMedName().equals(name)){
@@ -17,7 +33,7 @@ public class ContraindicationTable {
             } else {
                 probes++;
             }
-            i = (i + 1) % SIZE;
+            i = (i + 1) % size;
         }
         return i;
     }
@@ -116,6 +132,18 @@ public class ContraindicationTable {
 
         long key = 0;
         for (int i = 0; i < 8; i++) {
+            byte b = (byte) name.charAt(spots[i]);
+            key |= ((long) b) << (8 * i);
+        }
+        return key;
+    }
+
+    public static long hash4(String name) {
+        int len = name.length();
+        int[] spots = {0, len/3, 2*len/3, len - 1};
+
+        long key = 0;
+        for (int i = 0; i < 4; i++) {
             byte b = (byte) name.charAt(spots[i]);
             key |= ((long) b) << (8 * i);
         }
