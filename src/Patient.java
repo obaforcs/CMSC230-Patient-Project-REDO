@@ -5,6 +5,12 @@ import java.util.Scanner;
 public class Patient {
     private final PatientIdentity id;
 
+    private PrescriptionList prescriptions = new PrescriptionList();
+
+    public PrescriptionList getPrescriptions() {
+        return prescriptions;
+    }
+
     public Patient (PatientIdentity id){
         if (id == null || id.getName() == null || id.getDateOfBirth() == null){
             throw new IllegalArgumentException("Patient needs a name and date of birth");

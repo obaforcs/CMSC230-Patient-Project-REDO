@@ -36,4 +36,22 @@ public class PrescriptionList {
         rec.next = before.next;
         before.next = rec;
     }
+
+    public class Iterator {
+        private ListRecord current;
+
+        public Iterator() {
+            current = head;
+        }
+
+        public Prescription next() {
+            if (current == null) {
+                return null;
+            } else {
+                Prescription p = current.data;
+                current = current.next;
+                return p;
+            }
+        }
+    }
 }
