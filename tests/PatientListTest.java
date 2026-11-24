@@ -73,7 +73,5 @@ public class PatientListTest {
         assertEquals(smith, it.next());
         assertEquals(suarez, it.next());
         assertNull(it.next());
-
-
     }
 }
