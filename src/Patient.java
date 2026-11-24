@@ -18,7 +18,7 @@ public class Patient {
 
     public String toCSV() {
         Name name = id.getName();
-        SimpleDateFormat fmt = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         String dob = fmt.format(id.getDateOfBirth());
         return name.getLastName() + ", " + name.getFirstName() + ", " + dob;
     }
@@ -32,7 +32,7 @@ public class Patient {
             String first = sc.next();
             String dobText = sc.next();
 
-            Date dob = new SimpleDateFormat("MM-dd-yyyy").parse(dobText);
+            Date dob = new SimpleDateFormat("yyyy-MM-dd").parse(dobText);
             Name name = new Name(first, last);
 
             PatientIdentity id1 = new PatientIdentity(name, dob);
