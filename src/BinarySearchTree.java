@@ -53,4 +53,30 @@ public class BinarySearchTree<K extends Orderable<K>, T extends Keyed<K>> {
             return findNode(root.right, key);
         }
     }
+
+    private void findLeftmost(TreeNode start, Stack<TreeNode> stack) {
+        TreeNode node = start;
+        while (node != null) {
+            stack.push(node);
+            node = node.left;
+        }
+    }
+
+    public class Iterator {
+        private Stack<TreeNode> stack;
+
+        public Iterator() {
+            stack = new Stack<>(2000);
+            findLeftmost(root, stack);
+        }
+
+        public T next() {
+            TreeNode node = stack.pop();
+            if (node == null) {
+                return null;
+            }
+            findLeftmost(node.right, stack);
+            return node.data;
+        }
+    }
 }
