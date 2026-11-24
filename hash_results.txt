@@ -1,4 +1,5 @@
 CMSC 230 – Project 7 Hash Function Results
+Omaretsuli Bafor
 
 Hash functions tested
 1. 8-letter hash: takes 8 characters from the medicine name at positions
@@ -39,4 +40,3 @@ What I found
   all of the benefit, and 5009 would use 2.5 times the memory for only
   about 10% fewer probes.
 
-  - Omaretsuli Bafor
