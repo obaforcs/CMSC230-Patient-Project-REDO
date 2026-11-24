@@ -90,12 +90,56 @@ public class PatientList {
                     addUnsorted(p);
                 }
             }
-
+            mergeSort(0, nextEmpty - 1);
             scanner.close();
-            // sort everything (merge sort, we'll write it next)
+
             return true;
         } catch (IOException e) {
             return false;
+        }
+    }
+
+    private void mergeSort(int low, int high) {
+        if (low >= high){
+            return;
+        }
+        int mid = (low+high)/2;
+        mergeSort(low, mid);
+        mergeSort(mid+1,high);
+        merge(low, mid, high);
+    }
+
+    private void merge(int low, int mid, int high) {
+        Patient[] temp = new Patient[high - low + 1];
+        int left = low;
+        int right = mid + 1;
+        int k = 0;
+
+        while (left <= mid && right <= high) {
+            if (patientArray[right].getIdentity().isLessThan(patientArray[left].getIdentity())) {
+                temp[k] = patientArray[right];
+                right++;
+            } else {
+                temp[k] = patientArray[left];
+                left++;
+            }
+            k++;
+        }
+
+        while (left <= mid) {
+            temp[k] = patientArray[left];
+            left++;
+            k++;
+        }
+
+        while (right <= high) {
+            temp[k] = patientArray[right];
+            right++;
+            k++;
+        }
+
+        for (int t = 0; t < temp.length; t++) {
+            patientArray[low + t] = temp[t];
         }
     }
 
