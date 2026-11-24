@@ -1,3 +1,6 @@
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class PatientList {
     private final int MAX_PATIENTS = 1000;
     private Patient[] patientArray;
@@ -45,6 +48,24 @@ public class PatientList {
 
     public Patient find(PatientIdentity id) {
         return binarySearch(id);
+    }
+
+    public boolean saveToFile(String filename) {
+        try {
+            FileWriter writer = new FileWriter(filename);
+
+            Iterator it = new Iterator();
+            Patient p = it.next();
+            while (p != null) {
+                writer.write(p.toCSV() + "\n");
+                p = it.next();
+            }
+
+            writer.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     public class Iterator {
