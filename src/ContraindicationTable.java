@@ -10,7 +10,7 @@ public class ContraindicationTable {
     private long probes = 0;
 
     public ContraindicationTable() {
-        this(503, false);
+        this(2003, false);
     }
 
     public ContraindicationTable(int size, boolean useFour) {

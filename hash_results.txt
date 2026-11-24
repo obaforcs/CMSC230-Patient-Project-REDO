@@ -38,3 +38,5 @@ What I found
 - I would use the 8-letter hash with a table size of 2003. It gets almost
   all of the benefit, and 5009 would use 2.5 times the memory for only
   about 10% fewer probes.
+
+  - Omaretsuli Bafor
