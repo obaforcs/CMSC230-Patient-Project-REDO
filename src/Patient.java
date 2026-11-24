@@ -32,7 +32,9 @@ public class Patient {
             String first = sc.next();
             String dobText = sc.next();
 
-            Date dob = new SimpleDateFormat("yyyy-MM-dd").parse(dobText);
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+            fmt.setLenient(false);
+            Date dob = fmt.parse(dobText);
             Name name = new Name(first, last);
 
             PatientIdentity id1 = new PatientIdentity(name, dob);
