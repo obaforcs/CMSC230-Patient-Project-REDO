@@ -99,6 +99,38 @@ public class PatientList {
         }
     }
 
+    public boolean importPrescriptions(String filename) {
+        try {
+            Scanner scanner = new Scanner(new File(filename));
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+
+                Patient temp = Patient.makePatient(line);
+                if (temp == null) {
+                    continue;
+                }
+
+                Patient real = find(temp.getIdentity());
+                if (real == null) {
+                    continue;
+                }
+
+                Prescription pr = Prescription.makePrescription(line);
+                if (pr == null) {
+                    continue;
+                }
+
+                real.getPrescriptions().add(pr);
+            }
+
+            scanner.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
     private void mergeSort(int low, int high) {
         if (low >= high){
             return;
