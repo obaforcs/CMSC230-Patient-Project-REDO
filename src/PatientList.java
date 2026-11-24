@@ -1,5 +1,7 @@
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class PatientList {
     private final int MAX_PATIENTS = 1000;
@@ -21,6 +23,15 @@ public class PatientList {
             i--;
         }
         patientArray[i+1] = pat;
+        nextEmpty++;
+        return true;
+    }
+
+    private boolean addUnsorted(Patient pat) {
+        if (nextEmpty == MAX_PATIENTS){
+            return false;
+        }
+        patientArray[nextEmpty] = pat;
         nextEmpty++;
         return true;
     }
@@ -62,6 +73,26 @@ public class PatientList {
             }
 
             writer.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public boolean importFromFile(String filename) {
+        try {
+            Scanner scanner = new Scanner(new File(filename));
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                Patient p = Patient.makePatient(line);
+                if (p != null){
+                    addUnsorted(p);
+                }
+            }
+
+            scanner.close();
+            // sort everything (merge sort, we'll write it next)
             return true;
         } catch (IOException e) {
             return false;
