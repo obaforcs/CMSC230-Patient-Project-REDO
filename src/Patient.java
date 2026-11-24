@@ -2,7 +2,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-public class Patient {
+public class Patient implements Keyed<PatientIdentity> {
     private final PatientIdentity id;
 
     private PrescriptionList prescriptions = new PrescriptionList();
@@ -48,6 +48,10 @@ public class Patient {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public PatientIdentity getKey() {
+        return id;
     }
 
     @Override

@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class PatientIdentity {
+public class PatientIdentity implements Orderable<PatientIdentity> {
     private Name name;
     private Date dateOfBirth;
 
